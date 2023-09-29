@@ -1,3 +1,24 @@
 <%- include('../header') %>
-    <h1>Job</h1>
+    <div class="container-fluid my-5">
+        <div class="card">
+            <div class="card-header">
+                <h5>Youre Project</h5>
+                <a href="/jobs/create" class="link-underline-light btn">+ Tambah job</a>
+            </div>
+            <% jobs.forEach(job=> {%>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+
+                        <h6>Title:
+                            <%= job.title%>
+                        </h6>
+                        <p>Deskripsi:
+                            <%= job.description%>
+                        </p>
+                        <a href="/jobs/jobInformation/<%= job.id %>" class="btn btn-primary">lihat detail</a>
+                    </li>
+                </ul>
+                <%})%>
+        </div>
+    </div>
     <%- include('../footer') %>

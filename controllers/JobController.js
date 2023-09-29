@@ -4,11 +4,11 @@ class JobController {
     static async listJobs(req, res) {
         try {
             let result = await job.findAll()
-            if (result.length === 0) {
-                return res.status(200).json({
-                    message: `job has no items`
-                })
-            }
+            // if (result.length === 0) {
+            //     return res.status(200).json({
+            //         message: `job has no items`
+            //     })
+            // }
             res.status(200).render('job/index.ejs', { jobs: result })
         } catch (e) {
             res.status(500).json(e)
@@ -37,6 +37,10 @@ class JobController {
         }
     }
 
+    static createPage(req, res) {
+        res.status(200).render('job/create.ejs')
+    }
+
     static async create(req, res) {
         try {
             const { title, budget, description, status } = req.body
@@ -44,9 +48,25 @@ class JobController {
                 title, budget, description, status
             })
 
-            res.status(201).json(result)
+            res.status(201).redirect('/jobs')
         } catch (e) {
             res.status(500).json(e)
+        }
+    }
+
+    static async updatePage(req, res) {
+        try {
+            const id = +req.params.id
+            const findJob = await job.findByPk(id)
+            if (!findJob) {
+                return res.status(404).json({
+                    message: `job not found`
+                })
+            }
+
+            res.status(200).render('/job/update.ejs', { job: findJob })
+        } catch (e) {
+            res.json(e)
         }
     }
 
@@ -73,9 +93,7 @@ class JobController {
             })
 
             result[0] === 1 ?
-                res.status(200).json({
-                    message: `job with id ${id} has been updated`
-                }) :
+                res.status(200).redirect('/jobs') :
                 res.status(400).json({
                     message: `cannot update job`
                 })
@@ -98,9 +116,7 @@ class JobController {
             })
 
             result === 1 ?
-                res.status(200).json({
-                    message: `job with id ${id} has been deleted`
-                }) :
+                res.status(200).redirect('/jobs') :
                 res.status(404).json({
                     message: `Job with id ${id} not found`
                 })

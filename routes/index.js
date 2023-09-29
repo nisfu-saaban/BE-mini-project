@@ -6,7 +6,7 @@ route.get('/', (req, res) => {
 })
 
 const jobRoutes = require('./job')
-const freelancerRoutes = require('./freelancer')
+const freelancerRoutes = require('./free')
 const fjRoutes = require('./FJ')
 
 route.use('/jobs', jobRoutes)

@@ -10,10 +10,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       freelancer_id: {
-        type: Sequelize.NUMBER
+        type: Sequelize.INTEGER
       },
       job_id: {
-        type: Sequelize.NUMBER
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,

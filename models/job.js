@@ -19,24 +19,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: true,
-        msg: ""
+        notNull: { args: true, msg: "" }
       }
     },
     budget: {
       type: DataTypes.NUMBER,
       allowNull: false,
       validate: {
-        notNull: true,
-        msg: ""
+        notNull: { args: true, msg: "" }
       }
     },
     description: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: true,
-        msg: ""
+        notNull: { args: true, msg: "" }
       }
     },
     status: DataTypes.STRING

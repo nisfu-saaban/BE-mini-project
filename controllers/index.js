@@ -1,9 +1,9 @@
 const JobController = require('./JobController');
-const FreelancerController = require('./Freelancer');
+const Free = require('./Free')
 const FJController = require('./FJ');
 
 module.exports = {
     JobController,
-    FreelancerController,
+    Free,
     FJController
 }

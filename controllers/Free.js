@@ -1,7 +1,7 @@
 const { freelancer } = require('../models')
 
-class FreelancerController {
-    static async listfreelancers(req, res) {
+class Free {
+    static async listFreelancers(req, res) {
         try {
             let freelancers = await freelancer.findAll()
             // if (freelancers.length === 0) {
@@ -9,7 +9,9 @@ class FreelancerController {
             //         message: `freelancer has no items`
             //     })
             // }
-            res.status(200).render('freelancer/index.ejs', { freelancers })
+            res.status(200).render('freelancer/index.ejs', {
+                freelancers
+            })
         } catch (e) {
             res.status(500).json(e)
         }
@@ -44,12 +46,28 @@ class FreelancerController {
 
     static async create(req, res) {
         try {
-            const { first_name, last_name, email, password, contact_information } = req.body
+            const { first_name, last_name, image, email, password, contact_information } = req.body
             let result = await freelancer.create({
-                first_name, last_name, email, password, contact_information
+                first_name, last_name, image, email, password, contact_information
             })
 
             res.status(201).redirect('/freelancers')
+        } catch (e) {
+            res.status(500).json(e)
+        }
+    }
+
+    static async updatePage(req, res) {
+        try {
+            const id = +req.params.id
+            let freelance = await freelancer.findByPk(id)
+            if (!freelance) {
+                return res.status(404).json({
+                    message: `freelancer not found`
+                })
+            }
+
+            res.render('/freelancer/update.ejs', { freelance })
         } catch (e) {
             res.status(500).json(e)
         }
@@ -63,9 +81,9 @@ class FreelancerController {
                     message: `id invalid, id must a number`
                 })
             }
-            const { title, budget, description, status } = req.body
+            const { first_name, last_name, image, email, password, contact_information } = req.body
             let result = await freelancer.update({
-                title, budget, description, status
+                first_name, last_name, image, email, password, contact_information
             }, {
                 where: { id }
             })
@@ -104,4 +122,4 @@ class FreelancerController {
     }
 }
 
-module.exports = FreelancerController
+module.exports = Free

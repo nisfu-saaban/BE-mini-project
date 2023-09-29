@@ -20,16 +20,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: true,
-        msg: ""
+        notNull: { args: true, msg: "" }
       }
     },
     last_name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: true,
-        msg: ""
+        notNull: { args: true, msg: "" }
+
       }
     },
     image: DataTypes.STRING,
@@ -37,22 +36,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: true,
-        msg: ""
+        notNull: { args: true, msg: "" }
       }
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        notNull: true,
-        msg: ""
+        notNull: { args: true, msg: "" }
       }
     },
     contact_information: DataTypes.NUMBER
   }, {
     hooks: {
-      beforeCreate: (feelancer, options) => {
+      beforeCreate: (freelancer, options) => {
         freelancer.image = 'https://i.pravatar.cc/300'
       }
     },
