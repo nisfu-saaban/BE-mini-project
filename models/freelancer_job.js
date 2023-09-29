@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      freelancer_job.belongsTo(models.job)
+      freelancer_job.belongsTo(models.freelancer)
     }
   }
   freelancer_job.init({

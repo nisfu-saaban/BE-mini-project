@@ -11,14 +11,41 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      job.belongsToMany(models.freelancer, { through: models.freelancer_job })
     }
   }
   job.init({
-    title: DataTypes.STRING,
-    budget: DataTypes.NUMBER,
-    description: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        msg: ""
+      }
+    },
+    budget: {
+      type: DataTypes.NUMBER,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        msg: ""
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        msg: ""
+      }
+    },
     status: DataTypes.STRING
   }, {
+    hooks: {
+      beforeCreate: (job, options) => {
+        job.status = 'Belum selesai'
+      }
+    },
     sequelize,
     modelName: 'job',
   });

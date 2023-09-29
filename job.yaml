@@ -1,0 +1,177 @@
+openapi: 3.0.0
+info:
+  title: Job API
+  description: API for job data
+  version: 1.0.0
+
+servers:
+  - url: localhost:3000/jobs
+    description: base url for jobs api
+
+paths:
+  /:
+    get:
+      summary: return list of jobs has been created
+      responses:
+        "200": # status code
+          description: A JSON array object of jobs list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Jobs"
+
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+
+  /{id}:
+    get:
+      summary: return jobs with spesific id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: A JSON object of single job
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+
+        "400":
+          description: the id is invalid (not a number)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+
+        "404":
+          description: the id is not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /create:
+    post:
+      summary: create jobs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Job"
+      responses:
+        "201":
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+  /update/{id}:
+    put:
+      summary: update a job
+
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Job"
+
+      responses:
+        "200":
+          description: updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Job"
+
+        "404":
+          description: job not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+
+        "500":
+          description: internal server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+
+  /delete/{id}:
+    delete:
+      summary: delete job by id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        "200":
+          description: deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+
+        "404":
+          description: job not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/msg"
+
+components:
+  schemas:
+    Jobs:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: integer
+          title:
+            type: string
+          budget:
+            type: integer
+          status:
+            type: boolean
+    Job:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        budget:
+          type: integer
+        status:
+          type: boolean
+    msg:
+      type: object
+      properties:
+        message:
+          type: string
