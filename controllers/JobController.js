@@ -18,7 +18,7 @@ class JobController {
     static async jobInformation(req, res) {
         try {
             const id = +req.params.id
-            if (id !== 'number') {
+            if (typeof id !== 'number') {
                 res.status(400).json({
                     message: `id invalid, id must a number`
                 })
@@ -31,7 +31,7 @@ class JobController {
                 })
             }
 
-            res.status(200).json(result)
+            res.status(200).render('job/job_detail.ejs', { job: result })
         } catch (e) {
             res.status(500).json(e)
         }
@@ -64,9 +64,43 @@ class JobController {
                 })
             }
 
-            res.status(200).render('/job/update.ejs', { job: findJob })
+            res.status(200).render('job/update.ejs', { job: findJob })
         } catch (e) {
             res.json(e)
+        }
+    }
+
+    static async updateStatus(req, res) {
+        try {
+            const status = req.body.radioStatus
+            const id = +req.params.id
+            if (typeof id !== 'number') {
+                return res.status(400).json({
+                    message: `id invalid, id must a number`
+                })
+            }
+
+            const findJob = await job.findByPk(id)
+            if (!findJob) {
+                return res.status(404).json({
+                    message: `job with id ${id} not found`
+                })
+            }
+
+            let result = await job.update({
+                status
+            }, {
+                where: { id }
+            })
+
+            result[0] === 1 ?
+                res.status(200).redirect('/jobs') :
+                res.status(400).json({
+                    message: `cannot update job`
+                })
+
+        } catch (e) {
+            res.status(500).json(e)
         }
     }
 

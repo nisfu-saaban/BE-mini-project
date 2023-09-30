@@ -12,8 +12,18 @@
                         <h6>Title:
                             <%= job.title%>
                         </h6>
+
                         <p>Deskripsi:
                             <%= job.description%>
+                        </p>
+
+
+                        <p>Budget:
+                            <%= job.budget %>
+                        </p>
+
+                        <p>Status:
+                            <%= job.status %>
                         </p>
                         <a href="/jobs/jobInformation/<%= job.id %>" class="btn btn-primary">lihat detail</a>
                     </li>
