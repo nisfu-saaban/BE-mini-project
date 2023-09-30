@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      freelancer_job.belongsTo(models.job)
       freelancer_job.belongsTo(models.freelancer)
+      freelancer_job.belongsTo(models.job)
     }
   }
   freelancer_job.init({
-    freelancer_id: DataTypes.NUMBER,
-    job_id: DataTypes.NUMBER
+    freelancerId: DataTypes.INTEGER,
+    jobId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'freelancer_job',

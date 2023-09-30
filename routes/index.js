@@ -11,7 +11,7 @@ const fjRoutes = require('./FJ')
 
 route.use('/jobs', jobRoutes)
 route.use('/freelancers', freelancerRoutes)
-route.use('/FJs', fjRoutes)
+route.use('/freelancer_jobs', fjRoutes)
 
 module.exports = route
 

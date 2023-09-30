@@ -1,11 +1,13 @@
-const { freelancer, freelancer_job } = require('../models')
+const { freelancer, freelancer_job, job } = require('../models')
 
 class FJ {
     static async listFJs(req, res) {
         try {
-            let freelancer_jobs = await freelancer_job.findAll()
+            let freelancer_jobs = await freelancer_job.findAll({
+                inclide: [freelancer, job]
+            })
             if (freelancer_jobs.length === 0) {
-                res.status(200).json({
+                return res.status(200).json({
                     message: `freelancer_job has no items`
                 })
             }
@@ -18,20 +20,39 @@ class FJ {
     static async FJInformation(req, res) {
         try {
             const id = +req.params.id
-            if (id !== 'number') {
-                res.status(400).json({
+            if (typeof id !== 'number') {
+                return res.status(400).json({
                     message: `id invalid, id must a number`
                 })
             }
 
             let result = await freelancer_job.findByPk({
-                where: { id }
+                where: { jobId: id },
+                include: [freelancer, job]
             })
 
             if (!result) {
                 return res.status(404).json({
                     message: ``
                 })
+            }
+
+            let freeJob = {}
+
+            if (result.length === 0) {
+                result = await job.findByPk(id)
+                freeJob = {
+                    ...result[0].job.dataValues,
+                    freelancer
+                }
+            } else {
+                let freelancer = result.map(free => {
+                    return free.freelancer.dataValues
+                })
+                freeJob = {
+                    ...result[0].job.dataValues,
+                    freelancer
+                }
             }
 
             res.status(200).json(result)
@@ -42,9 +63,9 @@ class FJ {
 
     static async create(req, res) {
         try {
-            const { title, budget, description, status } = req.body
+            const { freelancerId, jobId } = req.body
             let result = await freelancer_job.create({
-                title, budget, description, status
+                freelancerId, jobId
             })
 
             res.status(201).json(result)
@@ -56,12 +77,12 @@ class FJ {
     static async update(req, res) {
         try {
             const id = +req.params.id
-            if (id !== 'number') {
-                res.status(400).json({
+            if (typeof id !== 'number') {
+                return res.status(400).json({
                     message: `id invalid, id must a number`
                 })
             }
-            const { title, budget, description, status } = req.body
+            const { freelancerId, jobId } = req.body
             let result = await freelancer_job.update({
                 title, budget, description, status
             }, {
@@ -83,8 +104,8 @@ class FJ {
     static async delete(req, res) {
         try {
             const id = +req.params.id
-            if (id !== 'number') {
-                res.status(400).json({
+            if (typeof id !== 'number') {
+                return res.status(400).json({
                     message: `id invalid, id must a number`
                 })
             }

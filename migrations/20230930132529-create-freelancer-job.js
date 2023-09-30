@@ -9,10 +9,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      freelancer_id: {
+      freelancerId: {
         type: Sequelize.INTEGER
       },
-      job_id: {
+      jobId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

@@ -10,9 +10,11 @@
                 <p class="card-text">
                     <%= job.description %>
                 </p>
-                <form action="/jobs/updateStatus/<%= job.id %>" method="post">
-                    <h6 class="form-check form-check-inline">Status: </h6>
 
+                <p>List freelance at project</p>
+
+                <form action="/jobs/updateStatus/<%= job.id %>" method="post">
+                    <h6 class=" form-check-inline">Status: </h6>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="radioStatus" value="On Progress"
                             id="flexRadioDefault1">
@@ -20,7 +22,7 @@
                             On Progress
                         </label>
                     </div>
-                    <div class="form-check form-check-inline mt-3">
+                    <div class="form-check form-check-inline ">
                         <input class="form-check-input" type="radio" name="radioStatus" value="Done"
                             id="flexRadioDefault1">
                         <label class="form-check-label" for="flexRadioDefault1">
