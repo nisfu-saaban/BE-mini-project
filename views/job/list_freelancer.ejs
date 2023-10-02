@@ -1,4 +1,4 @@
-<%- include('../header') -%>
+<%- include('../header') %>
     <div class="container-fluid">
         <div class="my-5">
             <h4>List of freelancer</h4>
@@ -6,35 +6,32 @@
 
         <div class="row">
             <% freelancers.forEach( free=> {%>
-                <div class="card mb-3 mx-3" style="max-width: 540px;">
+                <div class="card mb-3 mx-3" style="max-width: 620px;">
                     <div class="row g-0">
                         <div class="col-md-4">
-                            <img src="<%= free.image %>" class="img-fluid rounded-start" alt="avatar">
+                            <img src="<%= free.image %>" class="rounded" style="width: 8rem;" alt="avatar">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">Name:
+                                <h5 class="card-title form-check-inline">Name:
                                     <%= free.first_name%>
                                         <%= free.last_name%>
                                 </h5>
+                                <a href="/freelancer_jobs/update/<%= free.id %>/freelancer/<%= job_id %> "
+                                    class="btn btn-link form-check-inline">Tambahkan</a>
                                 <p class="card-text">Email:
                                     <%= free.email%>
                                 </p>
-                                <p class="card-text"><small class="text-body-secondary">Contact:
+                                <p class="card-text "><small class="text-body-secondary">Contact:
                                         <%= free.contact_information%>
                                     </small>
                                 </p>
-                                <a href="/freelancers/update/<%= free.id %>" class="btn btn-success">edit</a>
-                                <a href="/freelancers/delete/<%= free.id %>" class="btn btn-danger">hapus</a>
+
                             </div>
                         </div>
                     </div>
                 </div>
                 <%})%>
         </div>
-
-        <div>
-            <a href="/freelancers/create" class="my-3 btn btn-primary">Tambahkan freelancer</a>
-        </div>
     </div>
-    <%- include('../footer') -%>
+    <%- include('../footer') %>

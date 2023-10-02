@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const freelancerRoute = Router()
-const { FreelancerController } = require('../controllers')
+// const { FreelancerController } = require('../controllers')
 
 // freelancerRoute.get('/', FreelancerController.listFreelancers)
 // freelancerRoute.get('/freelancer/:id', FreelancerController.findFreelancer)

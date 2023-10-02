@@ -49,7 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     contact_information: DataTypes.NUMBER
   }, {
     hooks: {
-      beforeCreate: (freelancer, options) => {
+      beforeSave: (freelancer, options) => {
         freelancer.image = 'https://i.pravatar.cc/300'
       }
     },

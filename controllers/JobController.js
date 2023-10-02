@@ -1,14 +1,15 @@
-const { job } = require('../models')
+const { job, freelancer_job, freelancer } = require('../models')
+
 
 class JobController {
     static async listJobs(req, res) {
         try {
             let result = await job.findAll()
-            // if (result.length === 0) {
-            //     return res.status(200).json({
-            //         message: `job has no items`
-            //     })
-            // }
+            if (result.length === 0) {
+                return res.status(200).json({
+                    message: `job has no items`
+                })
+            }
             res.status(200).render('job/index.ejs', { jobs: result })
         } catch (e) {
             res.status(500).json(e)
@@ -31,10 +32,31 @@ class JobController {
                 })
             }
 
-            res.status(200).render('job/job_detail.ejs', { job: result })
+            const value = req.query.value;
+
+            res.status(200).render('job/job_detail.ejs', { job: result, value })
         } catch (e) {
             res.status(500).json(e)
         }
+    }
+
+    static async createByParams(req, res) {
+        try {
+            const id = +req.params.id
+
+            if (typeof id !== 'number') {
+                res.status(400).json({
+                    message: `id invalid (id must a number)`
+                })
+            }
+
+            let freelancers = await freelancer.findAll()
+
+            res.status(200).render('job/list_freelancer.ejs', { job_id: id, freelancers })
+        } catch (e) {
+            res.status(500).json(e)
+        }
+
     }
 
     static createPage(req, res) {

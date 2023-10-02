@@ -4,7 +4,7 @@ class FJ {
     static async listFJs(req, res) {
         try {
             let freelancer_jobs = await freelancer_job.findAll({
-                inclide: [freelancer, job]
+                include: [freelancer, job]
             })
             if (freelancer_jobs.length === 0) {
                 return res.status(200).json({
@@ -26,38 +26,59 @@ class FJ {
                 })
             }
 
-            let result = await freelancer_job.findByPk({
-                where: { jobId: id },
-                include: [freelancer, job]
+            let result = await job.findByPk(id, {
+                include: freelancer,
+
+            }, {
+                order: [
+                    ['id', 'asc']
+                ]
             })
 
             if (!result) {
                 return res.status(404).json({
-                    message: ``
+                    message: `record not found`
                 })
             }
 
-            let freeJob = {}
+            const value = result.freelancers
+            console.log(result)
 
-            if (result.length === 0) {
-                result = await job.findByPk(id)
-                freeJob = {
-                    ...result[0].job.dataValues,
-                    freelancer
-                }
-            } else {
-                let freelancer = result.map(free => {
-                    return free.freelancer.dataValues
-                })
-                freeJob = {
-                    ...result[0].job.dataValues,
-                    freelancer
-                }
-            }
-
-            res.status(200).json(result)
+            res.status(200).redirect(`/jobInformation/${id}?value=${value}`)
         } catch (e) {
             res.status(500).json(e)
+        }
+    }
+
+    static async listFreelancOfJob(req, res) {
+        try {
+            const job_id = +req.params.jobId
+            const f_id = +req.params.freeId
+
+            let freeList = await freelancer_job.findByPk({ job_id },
+                {
+
+                })
+
+        } catch (e) {
+            res.status(500).json(e)
+        }
+    }
+
+    static async updateOnListJob(req, res) {
+        try {
+            const JobId = +req.params.jobId
+            const FreeId = +req.params.freeId
+
+            await freelancer_job.create({
+                jobId: FreeId,
+                freelancerId: JobId
+            })
+
+            return res.status(200).redirect('/jobs')
+
+        } catch (e) {
+            res.status(200).json(e)
         }
     }
 
@@ -84,7 +105,7 @@ class FJ {
             }
             const { freelancerId, jobId } = req.body
             let result = await freelancer_job.update({
-                title, budget, description, status
+                freelancerId, jobId
             }, {
                 where: { id }
             })

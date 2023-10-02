@@ -11,31 +11,40 @@
                     <%= job.description %>
                 </p>
 
-                <p>List freelance at project</p>
+                <p class="form-check-inline ">List freelance at project</p>
+                <a href="/jobs/create/<%= job.id %>" class="form-check-inline btn btn-link">
+                    Tambah pekerja
+                </a>
 
-                <form action="/jobs/updateStatus/<%= job.id %>" method="post">
-                    <h6 class=" form-check-inline">Status: </h6>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="radioStatus" value="On Progress"
-                            id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            On Progress
-                        </label>
-                    </div>
-                    <div class="form-check form-check-inline ">
-                        <input class="form-check-input" type="radio" name="radioStatus" value="Done"
-                            id="flexRadioDefault1">
-                        <label class="form-check-label" for="flexRadioDefault1">
-                            Done
-                        </label>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-primary mt-3">update
-                            status</button>
-                        <a class=" form-check-inline btn btn-success mt-3" href="/jobs/update/<%= job.id %>">update
-                            details</a>
-                    </div>
-                </form>
+                <ul>
+                    <li>Babang Tamvan</li>
+                    <li>Paijo Juardi</li>
+                </ul>
+                <%= value %>
+
+                    <form action="/jobs/updateStatus/<%= job.id %>" method="post">
+                        <h6 class=" form-check-inline">Status: </h6>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radioStatus" value="On Progress"
+                                id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                On Progress
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline ">
+                            <input class="form-check-input" type="radio" name="radioStatus" value="Done"
+                                id="flexRadioDefault1">
+                            <label class="form-check-label" for="flexRadioDefault1">
+                                Done
+                            </label>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary mt-3">update
+                                status</button>
+                            <a class=" form-check-inline btn btn-success mt-3" href="/jobs/update/<%= job.id %>">update
+                                details</a>
+                        </div>
+                    </form>
             </div>
         </div>
     </div>

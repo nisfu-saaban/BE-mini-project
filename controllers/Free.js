@@ -67,7 +67,7 @@ class Free {
                 })
             }
 
-            res.render('/freelancer/update.ejs', { freelance })
+            res.render('freelancer/update.ejs', { freelance })
         } catch (e) {
             res.status(500).json(e)
         }

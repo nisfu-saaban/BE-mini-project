@@ -3,3 +3,5 @@ npx sequelize-cli model:generate --name job --attributes title:string,budget:num
 npx sequelize-cli model:generate --name freelancer --attributes first_name:string,last_name:string,image:string,email:string,password:string,contact_information:number
 
 npx sequelize-cli model:generate --name freelancer_job --attributes freelancer_id:number,job_id:number
+
+sent through params and not using create every click , create first and update right after create the junction table
